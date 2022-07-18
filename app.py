@@ -32,7 +32,7 @@ def get(category: str | None = None):
     if category is not None:
         data = collection.find({"category": category})
     else:
-        data = collection.find().sort("time", -1).limit(10)
+        data = collection.find()
     data = data.sort("_id", -1).limit(10)
     data = [{item: data[item] for item in data if item != "time"} for data in data]
     return {"isError": False, "message": "Success", "status": 200, "item": data}
