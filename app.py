@@ -28,7 +28,7 @@ database = client.techenclave
 collection = database.buy_sell_trade
 
 # CRUD methods
-def get(category: str | None = None):
+async def get(category: str | None = None):
     if category is not None:
         data = collection.find({"category": category})
     else:
@@ -38,7 +38,7 @@ def get(category: str | None = None):
     return {"isError": False, "message": "Success", "status": 200, "item": data}
 
 
-def delete(id: str):
+async def delete(id: str):
     if collection.find_one({"_id": id}) is not None:
         item = collection.find_one({"_id": id})
         collection.delete_one({"_id": id})
@@ -51,7 +51,7 @@ def delete(id: str):
         }
 
 
-def post(_item: Query):
+async def post(_item: Query):
     if collection.find_one({"_id": _item.id}) is not None:
         return {
             "isError": True,
@@ -76,7 +76,7 @@ def post(_item: Query):
     }
 
 
-def update(_item: Query):
+async def update(_item: Query):
     if collection.find_one({"_id": _item.id}) is not None:
         collection.update_one(
             {"_id": _item.id},
@@ -100,20 +100,20 @@ app = FastAPI()
 
 # create endpoints
 @app.get("/api/buySellTrade/")
-def get_item():
-    return get()
+async def get_item():
+    return await get()
 
 
 @app.delete("/api/buySellTrade/")
-def delete_item(id: str):
-    return delete(id)
+async def delete_item(id: str):
+    return await delete(id)
 
 
 @app.post("/api/buySellTrade/")
-def add_item(item: Query):
-    return post(item)
+async def add_item(item: Query):
+    return await post(item)
 
 
 @app.put("/api/buySellTrade/")
-def update_item(item: Query):
-    return update(item)
+async def update_item(item: Query):
+    return await update(item)
