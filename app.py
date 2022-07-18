@@ -25,7 +25,7 @@ client = MongoClient(
     f"mongodb+srv://{USERNAME}:{PASSWORD}@clusteruno.vsijxwy.mongodb.net/?retryWrites=true&w=majority"
 )
 database = client.techenclave
-collection = database.buy_sell_trade_temp
+collection = database.buy_sell_trade
 
 # CRUD methods
 def get(category: str | None = None):
